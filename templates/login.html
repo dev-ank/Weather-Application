@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div id="navbarBasicExample" class="navbar-menu">
+	<div class="navbar-start">
+	  <a class="navbar-item" href="{{url_for('index')}}">
+		Home
+	  </a>
+	  </div>
+	</div>
+
+	<div class="navbar-end">
+	  <div class="navbar-item">
+		<div class="buttons">
+		  <a class="button is-link" href="{{url_for('signup')}}">
+			<strong>Sign up</strong>
+		  </a>
+		</div>
+	  </div>
+	</div>
+  </div>
+</nav>
+
+
+<div class="column is-offset-4 is-4 ">
+	
+	<br/>
+	<br/>
+	<center><h1 class="title" >Login</h1></center>
+	<br/>
+	<br/>
+	
+	<form class="form-signin" action="/login" method="post">
+	<p class="control has-icons-left has-icons-right">
+	  <input class="input" type="email" placeholder="Email" method="post" name="email">
+	  <span class="icon is-small is-left">
+		<i class="fas fa-envelope"></i>
+	  </span>
+	  <span class="icon is-small is-right">
+		<i class="fas fa-check"></i>
+	  </span>
+	</p>
+  </div>
+  <div class="column is-offset-4 is-4 ">
+	<p class="control has-icons-left">
+	  <input class="input" type="password" placeholder="Password" method="post" name="password">
+	  <span class="icon is-small is-left">
+		<i class="fas fa-lock"></i>
+	  </span>
+	</p>
+	<br/>
+	<div class="buttons">
+		<button class="button is-success">Submit</button>
+	  </div>
+	</form>
+  </div>
+  <br/>
+  <br/>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% set message_class = 'is-success' %}
+
+                                {% if category == 'error' %}
+                                    {% set message_class = 'is-danger' %}
+								{% endif %}
+								<div class="container">
+                                <div class="notification {{ message_class }}">{{ message }}
+								</div>
+							</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+	<div class="container">
+		<center><h2 class="subtitle">After logging in you will be able to store the weather of multiple cities and you can check the history also.</h2></center>
+	</div>
+ 
+	<br/>
+	<br/>
+
+{% endblock  content %}

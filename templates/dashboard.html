@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div id="navbarBasicExample" class="navbar-menu">
+	<div class="navbar-start">
+	  </div>
+	</div>
+
+	<div class="navbar-end">
+	  <div class="navbar-item">
+		<div class="buttons">
+		  <a class="button is-light" href="{{url_for('logout')}}">
+			Log out
+		  </a>
+		</div>
+	  </div>
+	</div>
+  </div>
+</nav>
+
+<br/>
+<br/>
+<form class="form-signin" action="/post_details" method="post">
+	<div class="container">
+	  <p class="control has-icons-left has-icons-right">
+		  <label class="label"> Enter your location:</label>
+
+
+		<input class="input" type="text" placeholder="Detailed Weather in your city" name="city">
+		<span class="icon is-small is-left">
+		  <i class="fas fa-search"></i>
+		</span>
+	  </p>
+	  <br/>
+	
+			  <div class="control">
+				  <button class="button is-success">
+					  Search
+				  </button>
+				  <br/>
+				  <br/>
+			  </div>
+			  
+			
+	  </form>
+
+	  {% for weather in weather_data %}
+
+
+	  {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% set message_class = 'is-success' %}
+
+                                {% if category == 'error' %}
+                                    {% set message_class = 'is-danger' %}
+                                {% endif %}
+                                <div class="notification {{ message_class }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+						{% endwith %}
+						
+
+	  <h1 class="title">Temperature details for: {{weather.city}}</h1>
+  <section class="section">
+    <div class="container">
+
+		<article class="media">
+
+			<div class="media-right">
+				<figure class="image is-250x250">
+					<img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+				</figure>
+			</div>
+		
+			<div class="media-content">
+				
+      <h1 class="title">Current weather details:</h1>
+      <h2 class="subtitle">
+		<strong>Time</strong> : {{weather.time}} hrs
+		<br/>
+		 <strong>Sunrise</strong> : {{weather.sunrise}} hrs
+		 <br/>
+		 <strong>Sunset</strong> : {{weather.sunset}} hrs
+		 <br/>
+		 <strong>Temperature</strong> : {{weather.temperature}}°C
+		 <br/>
+		 <strong>Weather</strong> : {{weather.current_weather}}
+		 <br/>
+		 <strong>Pressure</strong> : {{weather.pressure}} mBar
+		 <br/>
+		 <strong>Humidity</strong> : {{weather.humidity}}%
+		 <br/>
+		 <strong>U.V. Index</strong> : {{weather.uvi}}
+		 <br/>
+		 <strong>Feels Like</strong> : {{weather.feels_like}}°C
+		 <br/>
+		 <strong>Wind Speed</strong> : {{weather.wind_speed}} Km/h
+		 <br/>
+		 <strong>Visibility</strong> : {{weather.visibility}} m
+		 <br/>
+	  </h2>
+	  </h2>
+	</div>
+	</article>
+    </div>
+  </section>
+
+  <br/>
+	<div class="buttons">
+		<a class="button is-danger" href="{{ url_for('delete_details', location=weather.city) }}">
+			Delete Location
+		</a>
+	</div>
+	<br/>
+	<br/>
+  </section>
+  {% endfor %}
+
+</div>
+{% endblock  content %}

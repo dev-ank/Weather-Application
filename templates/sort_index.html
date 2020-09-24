@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+	
+{% block content %}
+
+
+<div id="navbarBasicExample" class="navbar-menu">
+	<div class="navbar-start">
+		<a class="navbar-item" href="{{url_for('index')}}">
+			Home
+		  </a>
+	  </div>
+	</div>
+
+	<div class="navbar-end">
+	  <div class="navbar-item">
+		<div class="buttons">
+		  <a class="button is-link" href="{{url_for('signup')}}">
+			<strong>Sign up</strong>
+		  </a>
+		  <a class="button is-light" href="{{url_for('login')}}">
+			Log in
+		  </a>
+		  
+		</div>
+	  </div>
+	</div>
+  </div>
+</nav>
+<br/>
+<br/>
+<div class="container"><center><h2 class="subtitle">
+	Temperatures : Low to High
+  </h2></center></div>
+<br/>
+<section class="section">
+	<div class="container">
+		<div class="columns">
+			<div class="column is-offset-4 is-4 ">
+				{% for weather in weather_data|sort(attribute='temperature') %}
+				<div class="box has-background-link-light">
+					<article class="media">
+
+						<div class="media-left">
+							<figure class="image is-50x50">
+								<img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+							</figure>
+						</div>
+
+						<div class="media-content">
+							<div class="content">
+								<p>
+									<span class="title">{{ weather.city}}</span>
+									<br>
+									<span class="subtitle">{{weather.temperature}}°C</span>
+									<br>{{weather.description}} 
+								</p>
+							</div>
+						</div>
+
+						
+
+					</article>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock  content %}

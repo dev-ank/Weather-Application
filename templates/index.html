@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+	
+{% block content %}
+	
+<div id="navbarBasicExample" class="navbar-menu">
+	<div class="navbar-start">
+	  </div>
+	</div>
+
+	<div class="navbar-end">
+	  <div class="navbar-item">
+		<div class="buttons">
+		  <a class="button is-link" href="{{url_for('signup')}}">
+			<strong>Sign up</strong>
+		  </a>
+		  <a class="button is-light" href="{{url_for('login')}}">
+			Log in
+		  </a>
+		  
+		</div>
+	  </div>
+	</div>
+  </div>
+</nav>
+
+	  <section class="section">
+		<div class="container">
+		  <h1 class="title">Welcome to the Weather App.</h1>
+		  <h2 class="subtitle">
+			A simple app which predicts the weather information of any city and much more.
+		  </h2>
+		  <h4 class="small">Please <strong>Sign-up</strong> with us in order to get in-depth information about the weather.</h3>
+		</div>
+     <br/>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% set message_class = 'is-success' %}
+
+                                {% if category == 'error' %}
+                                    {% set message_class = 'is-danger' %}
+                                {% endif %}
+                                <div class="notification {{ message_class }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+	  </section>
+
+	  
+	
+	  <form class="form-signin" action="/" method="post">
+	  <div class="container">
+		<p class="control has-icons-left has-icons-right">
+			<label class="label"> Enter your location:</label>
+
+
+		  <input class="input" type="text" placeholder="Weather in your city" name="city">
+		  <span class="icon is-small is-left">
+			<i class="fas fa-search"></i>
+		  </span>
+		</p>
+		<br/>
+		
+
+				<div class="control">
+					<button class="button is-success">
+						Search
+					</button>
+					<br/>
+					<br/>
+					<div class="buttons">
+						<a class="button is-link" href="{{url_for('sort_index')}}">
+							Sort by lowest temperature
+						</a>
+					</div>
+				</div>
+				
+			  
+		</form>
+		
+
+		  <section class="section">
+			<div class="container">
+				<div class="columns">
+					<div class="column is-offset-4 is-4 ">
+						{% for weather in weather_data %}
+						<div class="box has-background-link-light">
+							<article class="media">
+
+								<div class="media-left">
+									<figure class="image is-50x50">
+										<img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+									</figure>
+								</div>
+
+								<div class="media-content">
+									<div class="content">
+										<p>
+											<span class="title">{{ weather.city}}</span>
+											<br>
+											<span class="subtitle">{{weather.temperature}}°C</span>
+											<br>{{weather.description}} 
+										</p>
+									</div>
+								</div>
+
+								<div class="buttons">
+									<a class="button is-danger" href="{{ url_for('delete', location=weather.city) }}">
+										x
+									</a>
+								</div>
+
+							</article>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	  
+	</div>
+{% endblock  content %}
+
+
+	  
